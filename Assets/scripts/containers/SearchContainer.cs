@@ -73,9 +73,6 @@ public class SearchContainer : MonoBehaviour {
 
 	}
 
-
-
-
 	private void UpdateDropdowns()
 	{
 		switch (searchType)
@@ -116,31 +113,28 @@ public class SearchContainer : MonoBehaviour {
 	private void SetContentDropDownContents()
 	{
 		contentDropdown.options.Clear();
-		for (int i = 0 ; i < SystemController.Library.Count; i++)
+		if (searchType == SystemEnum.SearchType.Professor)
 		{
-
-			if (searchType == SystemEnum.SearchType.Professor)
+			contentDropdown.options.Add(new Dropdown.OptionData() { text = "Choose a professor"});
+			for (int i = 0; i < SystemController.Professor.Count; i++)
 			{
-				if (i == 0)
-				{
-					contentDropdown.options.Add(new Dropdown.OptionData() { text = "Choose a professor"});
-					contentDropdown.captionText.text = "Choose a professor";
-				}
-
-
-				contentDropdown.options.Add(new Dropdown.OptionData() { text = SystemController.Library[i].Professor});
-
-
-
-			} else
-			{
-				if (i == 0)
-				{
-					contentDropdown.options.Add(new Dropdown.OptionData() { text = "Choose a course"});
-				}
-				contentDropdown.options.Add(new Dropdown.OptionData() { text = SystemController.Library[i].Course});
-
+				contentDropdown.options.Add(new Dropdown.OptionData() { text = SystemController.Professor[i]});
 			}
+
+			contentDropdown.value = 0;
+			contentDropdown.captionText.text = contentDropdown.options[0].text;
+
+		} else if (searchType == SystemEnum.SearchType.Course)
+		{
+			contentDropdown.options.Add(new Dropdown.OptionData() { text = "Choose a course"});
+			for (int i = 0; i < SystemController.Course.Count; i++)
+			{
+				contentDropdown.options.Add(new Dropdown.OptionData() { text = SystemController.Course[i]});
+			}
+			contentDropdown.value = 0;
+			contentDropdown.captionText.text = contentDropdown.options[0].text;
 		}
+
+
 	}
 }

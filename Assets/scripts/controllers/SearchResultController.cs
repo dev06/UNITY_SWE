@@ -55,8 +55,8 @@ public class SearchResultController : PageController {
 				RectTransform rt = clone.GetComponent<RectTransform>();
 				rt.offsetMin = new Vector2(0, 0);
 				rt.offsetMax = new Vector2(0, height);
-				rt.anchoredPosition = new Vector3(0 , -rt.rect.height * index * offset, 0);
 				rt.localScale = new Vector3(1, 1, 1);
+				rt.anchoredPosition = new Vector3(0 , -rt.rect.height * index * offset, 0);
 				index++;
 				templateParent.GetComponent<RectTransform>().sizeDelta = new Vector2(templateParent.GetComponent<RectTransform>().sizeDelta.x,  rt.rect.height * index * offset);
 				clone.GetComponent<SearchResultTemplate>().book = SystemController.Library[i];
@@ -70,8 +70,8 @@ public class SearchResultController : PageController {
 				RectTransform rt = clone.GetComponent<RectTransform>();
 				rt.offsetMin = new Vector2(0, 0);
 				rt.offsetMax = new Vector2(0, height);
-				rt.anchoredPosition = new Vector3(0 , -rt.rect.height * index * offset, 0);
 				rt.localScale = new Vector3(1, 1, 1);
+				rt.anchoredPosition = new Vector3(0 , -rt.rect.height * index * offset, 0);
 
 				index++;
 				templateParent.GetComponent<RectTransform>().sizeDelta = new Vector2(templateParent.GetComponent<RectTransform>().sizeDelta.x,  rt.rect.height * index * offset);
@@ -91,8 +91,8 @@ public class SearchResultController : PageController {
 						RectTransform rt = clone.GetComponent<RectTransform>();
 						rt.offsetMin = new Vector2(0, 0);
 						rt.offsetMax = new Vector2(0, height);
-						rt.anchoredPosition = new Vector3(0 , -rt.rect.height * index * offset, 0);
 						rt.localScale = new Vector3(1, 1, 1);
+						rt.anchoredPosition = new Vector3(0 , -rt.rect.height * index * offset, 0);
 
 						index++;
 						templateParent.GetComponent<RectTransform>().sizeDelta = new Vector2(templateParent.GetComponent<RectTransform>().sizeDelta.x,  rt.rect.height * index * offset);

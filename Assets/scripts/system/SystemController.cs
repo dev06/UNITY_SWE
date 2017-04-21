@@ -14,6 +14,7 @@ public class SystemController : MonoBehaviour {
 	public static bool IsLoggedIn;
 	public static Student LoggedStudent;
 	public static Book CurrentBook;
+	public static SystemEnum.BookType CurrentBookTypeSelected;
 
 
 	void Start()

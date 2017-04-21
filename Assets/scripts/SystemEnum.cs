@@ -33,6 +33,14 @@ public class SystemEnum
 		Header_Logout,
 		Header_Home,
 		Book_Cover,
+		UpArrow,
+		DownArrow,
+		AddToCart,
+		NewButton,
+		UsedButton,
+		RentButton,
+		EbookButton,
+		ShoppingCart,
 
 	}
 
@@ -43,6 +51,7 @@ public class SystemEnum
 		SearchResults,
 		None,
 		BookDescription,
+		ShoppingCart,
 
 	}
 
