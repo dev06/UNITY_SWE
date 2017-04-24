@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.IO;
+using System.Collections.Generic;
 public class FileIO : MonoBehaviour
 {
 
@@ -8,32 +9,102 @@ public class FileIO : MonoBehaviour
 	void Awake()
 	{
 		ParseBooks();
-		ParseStudents();
+		//	ParseStudents();
 	}
 
 	void ParseBooks()
 	{
 
-		TextAsset asset = (TextAsset)Resources.Load("books");
+		TextAsset asset = (TextAsset)Resources.Load("book_new");
 		string text = asset.text;
 
 		string[] data = text.Split('|');
 
-
-
-		for (int i = 0; i < 44; i++)
+		Debug.Log("Length =>" + data.Length);
+		for (int i = 0; i < data.Length; i++)
 		{
+			Debug.Log(data[i]);
+		}
+
+		for (int i = 0; i < data.Length; i++)
+		{
+			Book book = new Book();
 			try
 			{
 				string[] textSplit = data[i].Split('_');
-				Book book = new Book();
+
 				book.ISBN = textSplit[0];
 				book.Title = textSplit[1];
 				book.Author = textSplit[2];
-				book.Semester = textSplit[3];
-				book.Course = textSplit[4];
-				book.SectionNumber = textSplit[5];
-				book.Professor = textSplit[6];
+
+				if (textSplit[3].Contains(","))
+				{
+					string[] semesterSplit = textSplit[3].Split(',');
+					for (int w = 0; w < semesterSplit.Length; w++)
+					{
+						book.Semester.Add(semesterSplit[w]);
+					}
+				} else
+				{
+					book.Semester.Add(textSplit[3]);
+				}
+
+
+				if (textSplit[4].Contains(","))
+				{
+					string[] courseSplit = textSplit[4].Split(',');
+					for (int w = 0; w < courseSplit.Length; w++)
+					{
+						book.Course.Add(courseSplit[w]);
+					}
+				} else
+				{
+					book.Course.Add(textSplit[4]);
+				}
+
+
+				if (textSplit[5].Contains(","))
+				{
+					string[] sectionSplit = textSplit[5].Split(',');
+					for (int w = 0; w < sectionSplit.Length; w++)
+					{
+						book.SectionNumber.Add(sectionSplit[w]);
+					}
+				} else
+				{
+					book.SectionNumber.Add(textSplit[5]);
+				}
+
+
+				if (textSplit[6].Contains(","))
+				{
+					string[] profSplit = textSplit[6].Split(',');
+					for (int w = 0; w < profSplit.Length; w++)
+					{
+						book.Professor.Add(profSplit[w]);
+					}
+				} else
+				{
+					book.Professor.Add(textSplit[6]);
+				}
+
+
+				if (textSplit[7].Contains(","))
+				{
+					string[] crnSplit = textSplit[7].Split(',');
+					for (int w = 0; w < crnSplit.Length; w++)
+					{
+						book.CRN.Add(crnSplit[w]);
+					}
+				} else
+				{
+					book.CRN.Add(textSplit[7]);
+				}
+
+
+
+
+				// book.Professor = textSplit[6];
 
 				book.Importance = textSplit[8].ToString();
 				book.NewStock = int.Parse(textSplit[9]);
@@ -46,10 +117,11 @@ public class FileIO : MonoBehaviour
 				book.EbookPrice = float.Parse(textSplit[16]);
 				book.Description = textSplit[17].ToString();
 				book.Cover = (Sprite)Resources.Load<Sprite>("bookImages/" + book.ISBN);
+
 				SystemController.Library.Add(book);
 			} catch (System.Exception e)
 			{
-				Debug.Log(i);
+				Debug.Log(book.Title + " " + i + " " + e);
 			}
 
 		}
@@ -105,14 +177,18 @@ public class Book
 	public Sprite Cover;
 	public string Title;
 	public string Author;
-	public string Semester;
-	public string Course;
-	public string SectionNumber;
-	public string Professor;
-	public string CRN;
+	public List<string> Semester = new List<string>();
+	public List<string> Course = new List<string>();
+
+	public List<string> SectionNumber = new List<string>();
+	public List<string> Professor = new List<string>();
+	public List<string> CRN = new List<string>();
+
 	public string Importance;
 	public string ISBN;
 	public string Description;
+
+	public string additionalInfo;
 
 
 	public int NewStock;
@@ -127,6 +203,10 @@ public class Book
 	public float RentPrice;
 	public float EbookPrice;
 
+	public float TotalPrice;
+	public float ShippingPrice;
+	public float SalesTax = 0.07f;
+
 	public SystemEnum.BookType bookType;
 
 
@@ -136,6 +216,19 @@ public class Book
 	}
 
 
+
+
+
+}
+[System.Serializable]
+public class AddressInfo
+{
+	public string name;
+	public string addressOne;
+	public string addressTwo;
+	public string city;
+	public string state;
+	public string zipcode;
 }
 
 
@@ -143,6 +236,14 @@ public class Customer
 {
 	public string firstName;
 	public string lastName;
+
+	public string email;
+
+	public string addressOne;
+	public string addressTwo;
+	public string city;
+	public string state;
+	public string zipcode;
 }
 
 public class Student : Customer

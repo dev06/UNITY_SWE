@@ -10,16 +10,19 @@ public class PriceContainerHandler : MonoBehaviour {
 	void OnEnable()
 	{
 		EventManager.OnButtonClick += OnButtonClick;
+		EventManager.OnPageLoad += OnPageLoad;
 	}
 
 	void OnDisable()
 	{
 		EventManager.OnButtonClick -= OnButtonClick;
+		EventManager.OnPageLoad -= OnPageLoad;
 	}
 
 	void Update()
 	{
 		UpdateButtonColor();
+
 	}
 
 	void OnButtonClick(SystemEnum.ButtonID buttonID)
@@ -27,15 +30,21 @@ public class PriceContainerHandler : MonoBehaviour {
 
 		switch (buttonID)
 		{
+
 			case SystemEnum.ButtonID.NewButton:
 			{
 				SystemController.CurrentBookTypeSelected = SystemEnum.BookType.New;
+				SystemController.CurrentBook.bookType = SystemController.CurrentBookTypeSelected;
+
 				quantityContainer.ResetQuantity();
+
 				break;
 			}
 			case SystemEnum.ButtonID.UsedButton:
 			{
 				SystemController.CurrentBookTypeSelected = SystemEnum.BookType.Used;
+				SystemController.CurrentBook.bookType = SystemController.CurrentBookTypeSelected;
+
 				quantityContainer.ResetQuantity();
 
 				break;
@@ -43,6 +52,8 @@ public class PriceContainerHandler : MonoBehaviour {
 			case SystemEnum.ButtonID.RentButton:
 			{
 				SystemController.CurrentBookTypeSelected = SystemEnum.BookType.Rental;
+				SystemController.CurrentBook.bookType = SystemController.CurrentBookTypeSelected;
+
 				quantityContainer.ResetQuantity();
 
 				break;
@@ -50,13 +61,25 @@ public class PriceContainerHandler : MonoBehaviour {
 			case SystemEnum.ButtonID.EbookButton:
 			{
 				SystemController.CurrentBookTypeSelected = SystemEnum.BookType.Ebook;
+				SystemController.CurrentBook.bookType = SystemController.CurrentBookTypeSelected;
+
 				quantityContainer.ResetQuantity();
 				break;
 			}
+
+
 		}
 
 		UpdateButtonColor();
 
+	}
+
+	void OnPageLoad(SystemEnum.PageType page)
+	{
+		if (page != SystemEnum.PageType.BookDescription)
+		{
+			quantityContainer.ResetQuantity();
+		}
 	}
 
 	void UpdateButtonColor()

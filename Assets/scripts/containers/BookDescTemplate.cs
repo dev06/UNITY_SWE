@@ -15,10 +15,7 @@ public class BookDescTemplate : MonoBehaviour {
 	public Text ebookText;
 
 	void Start () {
-		if (book != null)
-		{
-			SetBook(book);
-		}
+
 	}
 
 
@@ -31,7 +28,7 @@ public class BookDescTemplate : MonoBehaviour {
 		newBookText.text = "New \n$" + book.NewPrice + "\nx" + book.NewStock;
 		usedBookText.text = "Used \n$" + book.UsedPrice + "\nx" + book.UsedStock;
 		rentBookText.text = "Rent \n$" + book.RentPrice + "\nx" + book.RentStock;
-		ebookText.text = "Ebook \n$" + book.EbookPrice + "\nx" + book.EbookStock;
+		ebookText.text = "Ebook \n$" + book.EbookPrice + "\n x999999";
 
 		cover.sprite = book.Cover;
 	}

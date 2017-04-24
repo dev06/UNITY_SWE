@@ -27,6 +27,27 @@ public class HomeController : PageController {
 		{
 			Hide();
 		}
+
+		if (buttonID == SystemEnum.ButtonID.ContactUs)
+		{
+			if (EventManager.OnPageLoad != null)
+			{
+				EventManager.OnPageLoad(SystemEnum.PageType.ContactUs);
+			}
+
+			Debug.Log("sadfsaf");
+		}
+
+		if (buttonID == SystemEnum.ButtonID.AboutUs)
+		{
+			if (EventManager.OnPageLoad != null)
+			{
+				EventManager.OnPageLoad(SystemEnum.PageType.AboutUs);
+			}
+			Debug.Log("asdfsadfsadf");
+
+		}
+
 	}
 
 

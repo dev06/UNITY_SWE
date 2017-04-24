@@ -6,53 +6,90 @@ public class ButtonEventHandler : MonoBehaviour, IPointerClickHandler, IPointerE
 
 
 	public SystemEnum.ButtonID buttonID;
+	public bool disabled;
 	public bool effect = true;
 	public Color hoverColor;
 	public Color restColor;
-
+	public Color disabledColor;
+	private Color defaultColor;
+	private Image image;
 	void Start () {
+		image = GetComponent<Image>();
+		if (image != null)
+		{	defaultColor = image.color;
+
+		}
 		if (GetComponent<Image>() != null && effect)
 		{
 			GetComponent<Image>().color = restColor;
 
 
 		}
+
+	}
+
+	void Update()
+	{
 
 	}
 
 
 	public virtual void OnPointerClick(PointerEventData data)
 	{
-		if (EventManager.OnButtonClick != null)
+		if (!disabled)
 		{
-			EventManager.OnButtonClick(buttonID);
+			if (EventManager.OnButtonClick != null)
+			{
+				EventManager.OnButtonClick(buttonID);
+			}
+
 		}
 
 
 	}
 	public virtual void OnPointerEnter(PointerEventData data)
 	{
-		if (GetComponent<Image>() != null && effect)
+		if (!disabled)
 		{
-			GetComponent<Image>().color = hoverColor;
-
-
+			if (GetComponent<Image>() != null && effect)
+			{
+				GetComponent<Image>().color = hoverColor;
+			}
+		} else
+		{
+			if (GetComponent<Image>() != null)
+			{
+				GetComponent<Image>().color = disabledColor;
+			}
 		}
-
 
 
 	}
 	public virtual void OnPointerExit(PointerEventData data)
 	{
-		if (GetComponent<Image>() != null && effect)
+
+		if (!disabled)
 		{
-			GetComponent<Image>().color = restColor;
+			if (GetComponent<Image>() != null && effect)
+			{
+				GetComponent<Image>().color = restColor;
 
 
+			}
+		} else
+		{
+			if (GetComponent<Image>() != null)
+			{
+				GetComponent<Image>().color = disabledColor;
+			}
 		}
 
 
+
 	}
+
+
+
 }
 
 

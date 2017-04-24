@@ -8,6 +8,8 @@ public class BookCoverHandler : MonoBehaviour, IPointerClickHandler {
 	{
 		SystemController.CurrentBook = template.book;
 		SystemController.CurrentBookTypeSelected = SystemEnum.BookType.New;
+		SystemController.CurrentBook.bookType = SystemController.CurrentBookTypeSelected ;
+
 		if (EventManager.OnPageLoad != null)
 		{
 			EventManager.OnPageLoad(SystemEnum.PageType.BookDescription);

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class LoginController : PageController {
 
 
-
+	public SystemEnum.PageType previousPage;
 	public InputField userName;
 	public InputField password;
 
@@ -23,10 +23,6 @@ public class LoginController : PageController {
 	}
 
 
-	void Update ()
-	{
-
-	}
 
 	void OnButtonClick(SystemEnum.ButtonID buttonID)
 	{
@@ -39,13 +35,14 @@ public class LoginController : PageController {
 				userName.text = password.text = "";
 				if (EventManager.OnPageLoad != null)
 				{
-					EventManager.OnPageLoad(SystemEnum.PageType.Home);
+					EventManager.OnPageLoad(PageLoader.PreviousPage);
 				}
 			}
 
 
 		} else if (buttonID == SystemEnum.ButtonID.Header_Login)
 		{
+			previousPage = PageLoader.CurrentPage;
 			if (EventManager.OnPageLoad != null)
 			{
 				EventManager.OnPageLoad(pageType);

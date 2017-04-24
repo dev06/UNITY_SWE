@@ -27,6 +27,8 @@ public class PageController : MonoBehaviour {
 		{
 			group = GetComponent<CanvasGroup>();
 		}
+
+
 		if (showInEdit)
 		{
 			Show();
@@ -35,6 +37,8 @@ public class PageController : MonoBehaviour {
 			Hide();
 		}
 	}
+
+
 
 }
 

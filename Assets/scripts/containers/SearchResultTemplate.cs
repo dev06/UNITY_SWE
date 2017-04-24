@@ -25,10 +25,10 @@ public class SearchResultTemplate : MonoBehaviour {
 			author.text = book.Author;
 			isbn.text = book.ISBN;
 			description.text = book.Description;
-			newBookText.text = "New \n" + book.NewPrice + "\n" + book.NewStock;
-			usedBookText.text = "Used \n" + book.UsedPrice + "\n" + book.UsedStock;
-			rentBookText.text = "Rent \n" + book.RentPrice + "\n" + book.RentStock;
-			ebookText.text = "Ebook \n" + book.EbookPrice + "\n" + book.EbookStock;
+			newBookText.text = "New \n $" + book.NewPrice + "\n x" + book.NewStock;
+			usedBookText.text = "Used \n $" + book.UsedPrice + "\n x" + book.UsedStock;
+			rentBookText.text = "Rent \n $" + book.RentPrice + "\n x"  + book.RentStock;
+			ebookText.text = "Ebook \n $" + book.EbookPrice + "\n x999999";
 
 			cover.sprite = book.Cover;
 		}

@@ -5,6 +5,8 @@ public class QuantityContainer : MonoBehaviour {
 
 	public Text quantityText;
 
+	public ShoppingCartController cartController;
+
 	void OnEnable()
 	{
 		EventManager.OnButtonClick += OnButtonClick;
@@ -62,6 +64,9 @@ public class QuantityContainer : MonoBehaviour {
 				book.Quantity++;
 			}
 
+
+
+
 		}
 		if (buttonID == SystemEnum.ButtonID.DownArrow)
 		{
@@ -70,6 +75,8 @@ public class QuantityContainer : MonoBehaviour {
 			{
 				book.Quantity--;
 			}
+
+
 		}
 		quantityText.text = book.Quantity + "";
 
@@ -78,11 +85,13 @@ public class QuantityContainer : MonoBehaviour {
 
 	public void ResetQuantity()
 	{
-		if (SystemController.CurrentBook == null) return;
+		if (SystemController.CurrentBook == null) { return; }
 		SystemController.CurrentBook.Quantity = 0;
 		quantityText.text = SystemController.CurrentBook.Quantity + "";
 
 	}
+
+
 
 
 }
