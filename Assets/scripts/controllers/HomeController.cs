@@ -35,7 +35,6 @@ public class HomeController : PageController {
 				EventManager.OnPageLoad(SystemEnum.PageType.ContactUs);
 			}
 
-			Debug.Log("sadfsaf");
 		}
 
 		if (buttonID == SystemEnum.ButtonID.AboutUs)
@@ -44,7 +43,6 @@ public class HomeController : PageController {
 			{
 				EventManager.OnPageLoad(SystemEnum.PageType.AboutUs);
 			}
-			Debug.Log("asdfsadfsadf");
 
 		}
 

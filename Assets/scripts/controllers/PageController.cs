@@ -37,9 +37,6 @@ public class PageController : MonoBehaviour {
 			Hide();
 		}
 	}
-
-
-
 }
 
 

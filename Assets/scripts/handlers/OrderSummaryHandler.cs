@@ -68,24 +68,24 @@ public class OrderSummaryHandler : MonoBehaviour {
 
 	public void UpdateInfoContainer()
 	{
-		subTotal.text = "Subtotal \t\t\t $" + ShoppingCartController.Subtotal  + "";
-		salesTax.text =  "Sales Tax \t\t\t $" + ShoppingCartController.SalesTax + "";
-		shipping.text =  "Shipping \t\t\t $" + ShoppingCartController.Shipping + "";
-		total.text =  "Order Total \t\t $" + ShoppingCartController.OrderTotal + "";
-		payment.text = "Payment \t\t\t " + CheckoutPaymentHandler.selectedPaymentType + "";
+		subTotal.text = "$" + ShoppingCartController.Subtotal  + "";
+		salesTax.text =  "$" + ShoppingCartController.SalesTax + "";
+		shipping.text =  "$" + ShoppingCartController.Shipping + "";
+		total.text =  "$" + ShoppingCartController.OrderTotal + "";
+		payment.text = "" + CheckoutPaymentHandler.selectedPaymentType + "";
 
 
 		shippingInfo.text = checkoutController.shippingAddressInfo.name + "\n" +
 		                    checkoutController.shippingAddressInfo.addressOne + "\n" +
 		                    checkoutController.shippingAddressInfo.city + ", " +
 		                    checkoutController.shippingAddressInfo.state + ", " +
-		                    checkoutController.shippingAddressInfo.zipcode ;
+		                    checkoutController.shippingAddressInfo.zipcode  + "," + checkoutController.shippingAddressInfo.country ;
 
 
 		billingInfo.text = checkoutController.billingAddressInfo.name + "\n" +
 		                   checkoutController.billingAddressInfo.addressOne + "\n" +
 		                   checkoutController.billingAddressInfo.city + ", " +
 		                   checkoutController.billingAddressInfo.state + ", " +
-		                   checkoutController.billingAddressInfo.zipcode ;
+		                   checkoutController.billingAddressInfo.zipcode  + "," + checkoutController.billingAddressInfo.country ;
 	}
 }

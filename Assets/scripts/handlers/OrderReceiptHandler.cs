@@ -8,6 +8,7 @@ public class OrderReceiptHandler : MonoBehaviour {
 
 	public CheckoutController checkoutController;
 
+
 	public Text subtotalText;
 	public Text shippingText;
 	public Text SalesTaxText;
@@ -66,25 +67,26 @@ public class OrderReceiptHandler : MonoBehaviour {
 			templateParent.GetComponent<RectTransform>().sizeDelta = new Vector2(templateParent.GetComponent<RectTransform>().sizeDelta.x,  rt.rect.height * (i + 1) * offset);
 			if (ShoppingCartController.BooksInCart[i].bookType == SystemEnum.BookType.Ebook)
 			{
-				ShoppingCartController.BooksInCart[i].additionalInfo = "Download Link: https://www.kennesawonlinebookstore.com/" + GenerateGUID();
+				ShoppingCartController.BooksInCart[i].additionalInfo = "Download Link(s): https://www.kennesawonlinebookstore.com/" + GenerateGUID();
 			} else if (ShoppingCartController.BooksInCart[i].bookType == SystemEnum.BookType.Rental)
 			{
 				ShoppingCartController.BooksInCart[i].additionalInfo = "Due Date: " + GenerateDueDate();
 
 			}
 			clone.GetComponent<OrderReceiptTemplate>().SetBook(ShoppingCartController.BooksInCart[i]);
+			checkoutController.cartController.UpdateInventory(ShoppingCartController.BooksInCart[i]);
 		}
 
 
-		subtotalText.text = "Subtotal \t\t $" + ShoppingCartController.Subtotal;
-		shippingText.text = "Shipping \t\t $" + ShoppingCartController.Shipping;
-		SalesTaxText.text = "Sales Tax \t\t $" + ShoppingCartController.SalesTax;
-		orderTotalText.text = "Order Total \t\t $" + ShoppingCartController.OrderTotal;
+		subtotalText.text = "$" + ShoppingCartController.Subtotal;
+		shippingText.text = "$" + ShoppingCartController.Shipping;
+		SalesTaxText.text = "$" + ShoppingCartController.SalesTax;
+		orderTotalText.text = "$" + ShoppingCartController.OrderTotal;
 		billingInfoText.text = checkoutController.billingAddressInfo.name + "\n" +
 		                       checkoutController.billingAddressInfo.addressOne + "\n" +
 		                       checkoutController.billingAddressInfo.city + ", " +
 		                       checkoutController.billingAddressInfo.state + ", " +
-		                       checkoutController.billingAddressInfo.zipcode ;
+		                       checkoutController.billingAddressInfo.zipcode + "," + checkoutController.billingAddressInfo.country ;
 
 		dateText.text = "Date " + System.DateTime.Now.Month + "/" +  System.DateTime.Now.Day + "/" + System.DateTime.Now.Year;
 		long invoice = Random.Range(00000000, 99999999);
@@ -101,6 +103,16 @@ public class OrderReceiptHandler : MonoBehaviour {
 		{
 			iDText.text = "Customer ID " + checkoutController.billingAddressInfo.name + "_" + invoice;
 		}
+
+
+		if (CheckoutPaymentHandler.selectedPaymentType == SystemEnum.PaymentType.FinancialAid)
+		{
+			if (SystemController.LoggedStudent != null)
+			{
+				checkoutController.cartController.UpdateFinancialAid(ShoppingCartController.OrderTotal);
+			}
+		}
+
 	}
 
 

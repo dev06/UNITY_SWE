@@ -5,26 +5,43 @@ using System.Collections.Generic;
 public class FileIO : MonoBehaviour
 {
 
+	public static string BOOKS_FILENAME = "book_new";
+	public static string STUDENTS_FILENAME = "student_new";
+
+
 
 	void Awake()
 	{
 		ParseBooks();
-		//	ParseStudents();
+		ParseStudents();
 	}
 
 	void ParseBooks()
 	{
 
-		TextAsset asset = (TextAsset)Resources.Load("book_new");
-		string text = asset.text;
+
+		string text = "";
+
+
+
+
+		foreach (string s in Directory.GetFiles(Application.dataPath))
+		{
+			if (s.Contains(BOOKS_FILENAME))
+			{
+				if (s.Contains(".meta")) continue;
+				string flipped = s.Replace(@"\", @"/");
+
+				text = GetFileContents(flipped);
+			}
+		}
+
+
 
 		string[] data = text.Split('|');
 
-		Debug.Log("Length =>" + data.Length);
-		for (int i = 0; i < data.Length; i++)
-		{
-			Debug.Log(data[i]);
-		}
+
+
 
 		for (int i = 0; i < data.Length; i++)
 		{
@@ -119,6 +136,9 @@ public class FileIO : MonoBehaviour
 				book.Cover = (Sprite)Resources.Load<Sprite>("bookImages/" + book.ISBN);
 
 				SystemController.Library.Add(book);
+
+
+
 			} catch (System.Exception e)
 			{
 				Debug.Log(book.Title + " " + i + " " + e);
@@ -127,14 +147,53 @@ public class FileIO : MonoBehaviour
 		}
 
 
+		// for (int i = 0; i < SystemController.Library.Count; i++)
+		// {
+		// 	if (i == 0)
+		// 	{
+		// 		SystemController.Library[i].NewStock = 12;
+		// 	}
+		// }
 
 
 	}
 
+
+
+	private void Replace(string[] data, string value)
+	{
+		for (int i = 0; i < data.Length; i++)
+		{
+			if (i == 0)
+			{
+				data[i] = "hello";
+			}
+		}
+		System.IO.File.WriteAllLines(Application.dataPath + "/" + BOOKS_FILENAME, data);
+	}
+
 	private void ParseStudents()
 	{
-		TextAsset asset = (TextAsset)Resources.Load("students");
-		string text = asset.text;
+		//TextAsset asset = (TextAsset)Resources.Load("students");
+
+		string text = "";
+
+
+
+
+		foreach (string s in Directory.GetFiles(Application.dataPath))
+		{
+			if (s.Contains(STUDENTS_FILENAME))
+			{
+				if (s.Contains(".meta")) continue;
+				string flipped = s.Replace(@"\", @"/");
+
+				text = GetFileContents(flipped);
+
+			}
+		}
+
+
 		string[] data = text.Split('|');
 		for (int i = 0; i < data.Length; i++)
 		{
@@ -214,11 +273,6 @@ public class Book
 	{
 
 	}
-
-
-
-
-
 }
 [System.Serializable]
 public class AddressInfo
@@ -229,6 +283,7 @@ public class AddressInfo
 	public string city;
 	public string state;
 	public string zipcode;
+	public string country;
 }
 
 

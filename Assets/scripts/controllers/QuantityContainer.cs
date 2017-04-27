@@ -90,8 +90,4 @@ public class QuantityContainer : MonoBehaviour {
 		quantityText.text = SystemController.CurrentBook.Quantity + "";
 
 	}
-
-
-
-
 }

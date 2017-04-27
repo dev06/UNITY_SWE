@@ -13,8 +13,4 @@ public class EventManager : MonoBehaviour {
 
 	public delegate void Page(SystemEnum.PageType page);
 	public static Page OnPageLoad;
-
-
-
-
 }

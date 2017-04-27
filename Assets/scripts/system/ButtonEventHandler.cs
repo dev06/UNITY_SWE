@@ -83,13 +83,7 @@ public class ButtonEventHandler : MonoBehaviour, IPointerClickHandler, IPointerE
 				GetComponent<Image>().color = disabledColor;
 			}
 		}
-
-
-
 	}
-
-
-
 }
 
 

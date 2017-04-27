@@ -13,7 +13,6 @@ public class SearchResultController : PageController {
 	void OnEnable()
 	{
 		EventManager.OnButtonClick += OnButtonClick;
-		//	EventManager.OnPageLoad += OnPageLoad;
 	}
 
 
@@ -21,7 +20,6 @@ public class SearchResultController : PageController {
 	void OnDisable()
 	{
 		EventManager.OnButtonClick -= OnButtonClick;
-		//EventManager.OnPageLoad -= OnPageLoad;
 	}
 
 
@@ -42,7 +40,10 @@ public class SearchResultController : PageController {
 				EventManager.OnPageLoad(PageLoader.PreviousPage);
 			}
 		}
-
+		if (buttonID == SystemEnum.ButtonID.ContinueShopping)
+		{
+			PopulateSearchResults();
+		}
 	}
 
 	void OnPageLoad(SystemEnum.PageType type)
@@ -119,22 +120,7 @@ public class SearchResultController : PageController {
 					}
 				}
 			}
-		} else if (searchContainer.searchType == SystemEnum.SearchType.Keyword)
-		{
-			// for (int i = 0; i < SystemController.Library.Count; i++)
-			// {
-			// 	Book currentBook = SystemController.Library[i];
-
-			// 	if (currentBook.Title.ToLower().Contains(searchContainer.keyword) ||
-			// 	        currentBook.Author.ToLower().Contains(searchContainer.keyword) ||
-			// 	        currentBook.ISBN.Contains(searchContainer.keyword))
-			// 	{
-			// 		DisplayBook(currentBook, i );
-			// 		foundMatches = true;
-			// 	}
-			// }
 		}
-
 
 		for (int i = 0; i < SystemController.Library.Count; i++)
 		{
@@ -145,7 +131,9 @@ public class SearchResultController : PageController {
 
 				if (currentBook.Title.ToLower().Contains(searchContainer.keyword) ||
 				        currentBook.Author.ToLower().Contains(searchContainer.keyword) ||
-				        currentBook.ISBN.Contains(searchContainer.keyword))
+				        currentBook.ISBN.Contains(searchContainer.keyword) ||
+				        currentBook.Course[0].Contains(searchContainer.keyword) ||
+				        currentBook.Course[0].ToLower().Contains(searchContainer.keyword))
 				{
 
 					GameObject clone = (GameObject)Instantiate(searchResultTemplate, Vector3.zero, Quaternion.identity) as GameObject;
@@ -166,74 +154,6 @@ public class SearchResultController : PageController {
 			}
 
 		}
-
-
-		for (int i = 0; i < SystemController.Library.Count; i++)
-		{
-
-
-
-
-			// if (SystemController.Library[i].Professor[0] == searchContainer.professorSelected && searchContainer.searchType == SystemEnum.SearchType.Professor)
-			// {
-
-			// 	GameObject clone = (GameObject)Instantiate(searchResultTemplate, Vector3.zero, Quaternion.identity) as GameObject;
-			// 	float height = clone.GetComponent<RectTransform>().rect.height;
-			// 	clone.transform.SetParent(templateParent);
-			// 	RectTransform rt = clone.GetComponent<RectTransform>();
-			// 	rt.offsetMin = new Vector2(0, 0);
-			// 	rt.offsetMax = new Vector2(0, height);
-			// 	rt.localScale = new Vector3(1, 1, 1);
-			// 	rt.anchoredPosition = new Vector3(0 , -rt.rect.height * index * offset, 0);
-			// 	index++;
-			// 	templateParent.GetComponent<RectTransform>().sizeDelta = new Vector2(templateParent.GetComponent<RectTransform>().sizeDelta.x,  rt.rect.height * index * offset);
-			// 	clone.GetComponent<SearchResultTemplate>().book = SystemController.Library[i];
-			// 	foundMatches = true;
-			// } else if (SystemController.Library[i].Course[0] == searchContainer.courseSelected && searchContainer.searchType == SystemEnum.SearchType.Course)
-			// {
-			// 	GameObject clone = (GameObject)Instantiate(searchResultTemplate, Vector3.zero, Quaternion.identity) as GameObject;
-			// 	float height = clone.GetComponent<RectTransform>().rect.height;
-
-			// 	clone.transform.SetParent(templateParent);
-			// 	RectTransform rt = clone.GetComponent<RectTransform>();
-			// 	rt.offsetMin = new Vector2(0, 0);
-			// 	rt.offsetMax = new Vector2(0, height);
-			// 	rt.localScale = new Vector3(1, 1, 1);
-			// 	rt.anchoredPosition = new Vector3(0 , -rt.rect.height * index * offset, 0);
-
-			// 	index++;
-			// 	templateParent.GetComponent<RectTransform>().sizeDelta = new Vector2(templateParent.GetComponent<RectTransform>().sizeDelta.x,  rt.rect.height * index * offset);
-			// 	clone.GetComponent<SearchResultTemplate>().book = SystemController.Library[i];
-			// 	foundMatches = true;
-
-			// } else
-			// {
-			// 	if (searchContainer.searchType == SystemEnum.SearchType.Keyword)
-			// 	{
-			// 		if (SystemController.Library[i].Course[0].ToLower().Contains(searchContainer.keyword) ||
-			// 		        SystemController.Library[i].Author.ToLower().Contains(searchContainer.keyword) ||
-			// 		        SystemController.Library[i].Title.ToLower().Contains(searchContainer.keyword))
-			// 		{
-			// 			GameObject clone = (GameObject)Instantiate(searchResultTemplate, Vector3.zero, Quaternion.identity) as GameObject;
-			// 			float height = clone.GetComponent<RectTransform>().rect.height;
-
-			// 			clone.transform.SetParent(templateParent);
-			// 			RectTransform rt = clone.GetComponent<RectTransform>();
-			// 			rt.offsetMin = new Vector2(0, 0);
-			// 			rt.offsetMax = new Vector2(0, height);
-			// 			rt.localScale = new Vector3(1, 1, 1);
-			// 			rt.anchoredPosition = new Vector3(0 , -rt.rect.height * index * offset, 0);
-
-			// 			index++;
-			// 			templateParent.GetComponent<RectTransform>().sizeDelta = new Vector2(templateParent.GetComponent<RectTransform>().sizeDelta.x,  rt.rect.height * index * offset);
-			// 			clone.GetComponent<SearchResultTemplate>().book = SystemController.Library[i];
-			// 			foundMatches = true;
-
-			// 		}
-			// 	}
-			// }
-		}
-
 
 		matchesFoundText.enabled = !foundMatches;
 	}

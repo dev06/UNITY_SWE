@@ -90,14 +90,4 @@ public class SystemController : MonoBehaviour {
 	{
 		return book.bookType == SystemEnum.BookType.Ebook ? 0 : 14.99f;
 	}
-
-
-
-	// void Update()
-	// {
-	// 	if (CurrentBookInCart != null) {
-	// 		Debug.Log(CurrentBookInCart.Title + " " + CurrentBookInCart.bookType);
-	// 	}
-	// }
-
 }

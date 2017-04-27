@@ -14,6 +14,8 @@ public class SearchResultTemplate : MonoBehaviour {
 	public Text usedBookText;
 	public Text rentBookText;
 	public Text ebookText;
+	public Text courseText;
+	public Text sectionText;
 
 
 
@@ -29,7 +31,8 @@ public class SearchResultTemplate : MonoBehaviour {
 			usedBookText.text = "Used \n $" + book.UsedPrice + "\n x" + book.UsedStock;
 			rentBookText.text = "Rent \n $" + book.RentPrice + "\n x"  + book.RentStock;
 			ebookText.text = "Ebook \n $" + book.EbookPrice + "\n x999999";
-
+			courseText.text = "Course " + book.Course[0];
+			sectionText.text = "Section " + book.SectionNumber[0];
 			cover.sprite = book.Cover;
 		}
 	}

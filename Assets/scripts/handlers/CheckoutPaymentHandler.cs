@@ -160,14 +160,14 @@ public class CheckoutPaymentHandler : MonoBehaviour {
 		                           checkoutController.shippingAddressInfo.addressOne + "\n" +
 		                           checkoutController.shippingAddressInfo.city + ", " +
 		                           checkoutController.shippingAddressInfo.state + ", " +
-		                           checkoutController.shippingAddressInfo.zipcode ;
+		                           checkoutController.shippingAddressInfo.zipcode + "," + checkoutController.shippingAddressInfo.country ;
 
 
 		billingAddressText.text = checkoutController.billingAddressInfo.name + "\n" +
 		                          checkoutController.billingAddressInfo.addressOne + "\n" +
 		                          checkoutController.billingAddressInfo.city + ", " +
 		                          checkoutController.billingAddressInfo.state + ", " +
-		                          checkoutController.billingAddressInfo.zipcode ;
+		                          checkoutController.billingAddressInfo.zipcode + "," + checkoutController.billingAddressInfo.country;
 	}
 
 
@@ -239,6 +239,4 @@ public class CheckoutPaymentHandler : MonoBehaviour {
 	{
 		ClearPaymentInformation();
 	}
-
-
 }

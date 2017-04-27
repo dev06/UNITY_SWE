@@ -70,6 +70,11 @@ public class HeaderController : MonoBehaviour {
 			}
 		}
 
+		if (buttonID == SystemEnum.ButtonID.CloseApp)
+		{
+			Application.Quit();
+		}
+
 	}
 
 	void SetButtonActive(CanvasGroup group, bool active)

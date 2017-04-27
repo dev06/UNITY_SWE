@@ -15,6 +15,7 @@ public class ShoppingCartController : PageController {
 	public Text taxText;
 	public Text OrderTotalText;
 	public Text emptyShoppingCartText;
+	public Text shoppingCartTotalText;
 	public GameObject CartTemplate;
 	public Transform templateParent;
 
@@ -63,11 +64,19 @@ public class ShoppingCartController : PageController {
 			}
 		}
 
+		if (buttonID == SystemEnum.ButtonID.EmptyShoppingCart)
+		{
+			ClearShoppingCart();
+			PopulateShoppingCart();
+		}
+
 
 	}
 
 	void Update()
 	{
+
+
 
 	}
 
@@ -89,12 +98,14 @@ public class ShoppingCartController : PageController {
 		if (!HasExactbook(book))
 		{
 			Book b = new Book();
+			b.Course = new List<string>();
 			b.Cover = book.Cover;
 			b.Author = book.Author;
 			b.NewPrice = book.NewPrice;
 			b.UsedPrice = book.UsedPrice;
 			b.EbookPrice = book.EbookPrice;
 			b.RentPrice = book.RentPrice;
+			b.Course.Add(book.Course[0]);
 			b.Title = book.Title;
 			b.Quantity = quantity;
 			b.bookType = book.bookType;
@@ -252,6 +263,10 @@ public class ShoppingCartController : PageController {
 			shoppingCartButtonText.text = GetQuantity() + "";
 		}
 
+
+
+
+
 		UpdateInfoContainer();
 	}
 
@@ -263,27 +278,37 @@ public class ShoppingCartController : PageController {
 		float orderTotal = 0;
 		for (int i = 0 ; i < BooksInCart.Count; i++)
 		{
-			subTotal += BooksInCart[i].TotalPrice;
+			subTotal += SystemController.GetUnitPriceByType(BooksInCart[i]) * GetBook(BooksInCart[i]).Quantity;
 		}
 
-		for (int i = 0 ; i < BooksInCart.Count; i++)
+
+
+		if (HasBookType(SystemEnum.BookType.New) || HasBookType(SystemEnum.BookType.Used) || HasBookType(SystemEnum.BookType.Rental))
 		{
-			shipping += SystemController.GetShippingCostByType(BooksInCart[i]);
+			shipping = 14.99f;
+		} else
+		{
+			shipping = 0;
 		}
+
 
 		float temp = (int)(((subTotal + shipping) * 0.07f) * 100.0f) / 100.0f;
 		tax = temp;
 		orderTotal = (int)(((subTotal + shipping + tax) * 100f)) / 100.0f;
 
-		subTotalText.text = "Subtotal \t\t\t $" + subTotal;
-		shippingText.text = "Shipping \t\t\t $" + shipping;
-		taxText.text = "Sales tax \t\t\t $" + tax;
-		OrderTotalText.text = "Total \t\t\t $" + orderTotal;
+		subTotalText.text = "$" + subTotal;
+		shippingText.text = "$" + shipping;
+		taxText.text = "$" + tax;
+		OrderTotalText.text = "$" + orderTotal;
 		OrderTotal = orderTotal;
 		Subtotal = subTotal;
 		Shipping = ((int)(shipping * 100.0f) / 100.0f);
 		SalesTax = tax;
 		emptyShoppingCartText.enabled = BooksInCart.Count == 0;
+
+		shoppingCartTotalText.text = "$" + Subtotal;
+
+
 	}
 
 	public void RemoveAllBooks(Book book)
@@ -293,6 +318,20 @@ public class ShoppingCartController : PageController {
 			GetBook(book).Quantity = 0;
 			RemoveBook(book);
 		}
+	}
+
+	public bool HasBookType(SystemEnum.BookType type)
+	{
+		for (int i = 0; i < BooksInCart.Count; i++)
+		{
+			if (BooksInCart[i].bookType == type)
+			{
+				return true;
+			}
+		}
+
+		return false;
+
 	}
 
 	public void RemoveBooksOfType(SystemEnum.BookType type)
@@ -317,5 +356,46 @@ public class ShoppingCartController : PageController {
 	{
 		BooksInCart.Clear();
 		UpdateShoppingQuantityIcon();
+	}
+
+	public void UpdateInventory(Book book)
+	{
+
+		for (int i = 0; i < SystemController.Library.Count; i++)
+		{
+			Book currentBook = SystemController.Library[i];
+
+			if (currentBook.Title == book.Title && currentBook.bookType == book.bookType && currentBook.Course[0] == book.Course[0])
+			{
+				switch (book.bookType)
+				{
+					case SystemEnum.BookType.New:
+					{
+						SystemController.Library[i].NewStock -= book.Quantity;
+						break;
+					}
+
+					case SystemEnum.BookType.Used:
+					{
+						SystemController.Library[i].UsedStock -= book.Quantity;
+						break;
+					}
+
+					case SystemEnum.BookType.Rental:
+					{
+						SystemController.Library[i].RentStock -= book.Quantity;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	public void UpdateFinancialAid(float orderTotal)
+	{
+		if (SystemController.LoggedStudent != null)
+		{
+			SystemController.LoggedStudent.aid -= orderTotal;
+		}
 	}
 }

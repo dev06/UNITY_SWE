@@ -18,8 +18,7 @@ public class CheckoutController : PageController
 	public InputField shippingEmail, shippingName, shippingAddressOne, shippingAddressTwo, shippingCity, shippingZipcode;
 	public Dropdown shippingState;
 
-	public InputField billingName, billingAddressOne, billingAddressTwo, billingCity, billingZipcode;
-	public Dropdown billingState;
+	public InputField billingName, billingAddressOne, billingAddressTwo, billingCity, billingZipcode, billingCountry, billingState;
 
 
 	public CheckoutPaymentHandler paymentHandler;
@@ -59,7 +58,6 @@ public class CheckoutController : PageController
 		for (int i = 0; i < SystemEnum.States.Length; i++)
 		{
 			shippingState.options.Add(new Dropdown.OptionData() { text = SystemEnum.States[i]});
-			billingState.options.Add(new Dropdown.OptionData() { text = SystemEnum.States[i]});
 		}
 	}
 
@@ -98,11 +96,14 @@ public class CheckoutController : PageController
 			if (CurrentStep == 1)
 			{
 				RecordShippingInfo();
+
+
 				if (HaveAllShippingInfo())
 				{
 					CurrentStep++;
 					UpdateStepPanel();
 				}
+
 			} else if (CurrentStep == 2)
 			{
 
@@ -217,6 +218,7 @@ public class CheckoutController : PageController
 		shippingAddressInfo.city = shippingCity.text;
 		shippingAddressInfo.state = shippingState.captionText.text;
 		shippingAddressInfo.zipcode = shippingZipcode.text;
+		shippingAddressInfo.country = "USA";
 	}
 
 	void RecordBillingInfo(bool sameAsShipping)
@@ -227,8 +229,9 @@ public class CheckoutController : PageController
 			billingAddressInfo.addressOne = billingAddressOne.text;
 			billingAddressInfo.addressTwo = billingAddressTwo.text;
 			billingAddressInfo.city = billingCity.text;
-			billingAddressInfo.state = billingState.captionText.text;
+			billingAddressInfo.state = billingState.text;
 			billingAddressInfo.zipcode = billingZipcode.text;
+			billingAddressInfo.country = billingCountry.text;
 		} else
 		{
 			billingAddressInfo.name = shippingAddressInfo.name;
@@ -237,7 +240,9 @@ public class CheckoutController : PageController
 			billingAddressInfo.city = shippingAddressInfo.city;
 			billingAddressInfo.state = shippingAddressInfo.state;
 			billingAddressInfo.zipcode = shippingAddressInfo.zipcode;
+			billingAddressInfo.country = "USA";
 		}
+
 
 	}
 
@@ -256,9 +261,10 @@ public class CheckoutController : PageController
 		if (billingName.text.Length <= 0) { return false; }
 		if (billingAddressOne.text.Length <= 0) { return false; }
 		if (billingCity.text.Length <= 0) { return false; }
-		if (billingState.value == 0) { return false; }
+		if (billingState.text.Length <= 0) { return false; }
 		if (billingName.text.Length <= 0) { return false; }
 		if (billingZipcode.text.Length < 5) { return false; }
+		if (billingCountry.text.Length <= 0) {return false;}
 
 		return true;
 	}
@@ -294,7 +300,8 @@ public class CheckoutController : PageController
 			billingAddressTwo.text = shippingAddressTwo.text;
 			billingCity.text = shippingCity.text;
 			billingZipcode.text = shippingZipcode.text;
-			billingState.value = shippingState.value;
+			billingState.text = shippingState.captionText.text;
+			billingCountry.text = "USA";
 		}
 	}
 
@@ -307,7 +314,8 @@ public class CheckoutController : PageController
 
 		billingCity.text = "";
 		billingZipcode.text = "";
-		billingState.value = 0;
+		billingState.text = "";
+		billingCountry.text = "";
 
 		shippingName.text = "";
 		shippingAddressOne.text = "";
@@ -344,13 +352,5 @@ public class CheckoutController : PageController
 	{
 		ClearCheckoutInformation();
 	}
-
-
-
-
-
-
-
-
 
 }

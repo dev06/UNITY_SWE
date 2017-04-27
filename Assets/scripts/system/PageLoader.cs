@@ -52,7 +52,4 @@ public class PageLoader : MonoBehaviour {
 		group.alpha = 1;
 		group.blocksRaycasts = true;
 	}
-
-
-
 }
