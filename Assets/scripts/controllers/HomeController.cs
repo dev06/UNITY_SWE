@@ -48,11 +48,6 @@ public class HomeController : PageController {
 
 	}
 
-
-
-
-
-
 	void OnValidate()
 	{
 		if (group == null)

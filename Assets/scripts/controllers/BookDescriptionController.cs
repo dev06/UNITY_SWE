@@ -31,6 +31,4 @@ public class BookDescriptionController : PageController {
 		if (SystemController.CurrentBook == null) { return; }
 		template.SetBook(SystemController.CurrentBook);
 	}
-
-
 }

@@ -120,6 +120,7 @@ public class OrderReceiptHandler : MonoBehaviour {
 		FileIO.CurrentInvoice = "";
 		FileIO.CurrentInvoice = "CustomerID " + checkoutController.billingAddressInfo.name + "_" + invoice + " " + "Time " + System.DateTime.Now + " PaymentType " +
 		                        CheckoutPaymentHandler.selectedPaymentType + " Invoice Number " + invoice + " Order Total " + ShoppingCartController.OrderTotal + " Books " + booksPurchased;
+		Email.Send(checkoutController.shippingEmail.text, FileIO.CurrentInvoice);
 		FileIO.CreateInvoice();
 
 	}

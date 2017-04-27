@@ -1,0 +1,3 @@
+CustomerID Devan Patel_26124022 Time 4/27/2017 11:48:33 AM PaymentType PayPal Invoice Number 26124022 Order Total 786.42 Books x3 Basics of Engineering Economy 2nd Edition  x2 Basics of Engineering Economy 2nd Edition  
+CustomerID John Doe_70043653 Time 4/27/2017 12:14:42 PM PaymentType PayPal Invoice Number 70043653 Order Total 358.43 Books x2 Basics of Engineering Economy 2nd Edition  
+CustomerID deva_96321818 Time 4/27/2017 12:20:54 PM PaymentType PayPal Invoice Number 96321818 Order Total 144.42 Books x1 Basics of Engineering Economy 2nd Edition  
