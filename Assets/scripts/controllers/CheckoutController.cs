@@ -52,6 +52,10 @@ public class CheckoutController : PageController
 		SetPrompt(billingAddRessMask, toggle.isOn);
 	}
 
+	void Update()
+	{
+
+	}
 
 	void InitializeDropDowns()
 	{
@@ -245,28 +249,66 @@ public class CheckoutController : PageController
 
 
 	}
-
+	public DialogHandler diaHandler;
 	bool HaveAllShippingInfo()
 	{
-		if (shippingName.text.Length <= 0) { return false; }
-		if (shippingAddressOne.text.Length <= 0) { return false; }
-		if (shippingCity.text.Length <= 0) { return false; }
-		if (shippingState.value == 0) { return false; }
-		if (shippingName.text.Length <= 0) { return false; }
-		if (shippingZipcode.text.Length < 5) { return false; }
-		return true;
+		string error = "";
+		bool dontHaveInfo = false;
+		if (shippingName.text.Length <= 0) { error = "Enter a shipping address"; dontHaveInfo = true; }
+		if (shippingAddressOne.text.Length <= 0) { error = "Enter a shipping address";  dontHaveInfo = true;}
+		if (shippingCity.text.Length <= 0) {error = "Enter a shipping city";  dontHaveInfo = true; }
+		if (shippingState.value == 0) { error = "Enter a shipping state";  dontHaveInfo = true;}
+		if (shippingZipcode.text.Length < 5) { error = "Enter a 5 digit zipcode"; dontHaveInfo = true; }
+		if (!IsValidEmail(shippingEmail.text)) {error = "Enter a valid email";  dontHaveInfo = true;}
+		if (dontHaveInfo)
+		{
+			diaHandler.ShowDialog(error);
+		}
+		return !dontHaveInfo;
 	}
+
+	bool IsValidEmail(string email)
+	{
+
+		if (email.Contains("@gmail.com") || email.Contains("@hotmail.com") || email.Contains("@yahoo.com"))
+		{
+			char firstLetter = email[0];
+			if (firstLetter != '@')
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	// bool HaveAllBillingInfo()
+	// {
+	// 	if (billingName.text.Length <= 0) { return false; }
+	// 	if (billingAddressOne.text.Length <= 0) { return false; }
+	// 	if (billingCity.text.Length <= 0) { return false; }
+	// 	if (billingState.text.Length <= 0) { return false; }
+	// 	if (billingName.text.Length <= 0) { return false; }
+	// 	if (billingZipcode.text.Length < 5) { return false; }
+	// 	if (billingCountry.text.Length <= 0) {return false;}
+
+	// 	return true;
+	// }
+
+
 	bool HaveAllBillingInfo()
 	{
-		if (billingName.text.Length <= 0) { return false; }
-		if (billingAddressOne.text.Length <= 0) { return false; }
-		if (billingCity.text.Length <= 0) { return false; }
-		if (billingState.text.Length <= 0) { return false; }
-		if (billingName.text.Length <= 0) { return false; }
-		if (billingZipcode.text.Length < 5) { return false; }
-		if (billingCountry.text.Length <= 0) {return false;}
-
-		return true;
+		string error = "";
+		bool dontHaveInfo = false;
+		if (billingName.text.Length <= 0) { error = "Enter a billing name"; dontHaveInfo = true; }
+		if (billingAddressOne.text.Length <= 0) { error = "Enter a billing address";  dontHaveInfo = true;}
+		if (billingCity.text.Length <= 0) {error = "Enter a billing city";  dontHaveInfo = true; }
+		if (billingState.text.Length <= 0) { error = "Enter a billing state";  dontHaveInfo = true;}
+		if (billingZipcode.text.Length < 5) { error = "Enter a 5 digit zipcode"; dontHaveInfo = true; }
+		if (billingCountry.text.Length <= 0) {error = "Enter a country"; dontHaveInfo = true;}
+		if (dontHaveInfo)
+		{
+			diaHandler.ShowDialog(error);
+		}
+		return !dontHaveInfo;
 	}
 
 

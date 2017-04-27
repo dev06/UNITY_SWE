@@ -53,6 +53,8 @@ public class OrderReceiptHandler : MonoBehaviour {
 
 		float offset = 1.2f;
 		float startOffset = 1.0f;
+		string booksPurchased = "";
+
 		for (int i = 0 ; i < ShoppingCartController.BooksInCart.Count; i++)
 		{
 			GameObject clone = (GameObject)Instantiate(orderReceiptTemplate, Vector3.zero, Quaternion.identity) as GameObject;
@@ -75,6 +77,7 @@ public class OrderReceiptHandler : MonoBehaviour {
 			}
 			clone.GetComponent<OrderReceiptTemplate>().SetBook(ShoppingCartController.BooksInCart[i]);
 			checkoutController.cartController.UpdateInventory(ShoppingCartController.BooksInCart[i]);
+			booksPurchased += "x" + ShoppingCartController.BooksInCart[i].Quantity + " " + ShoppingCartController.BooksInCart[i].Title + " " + ShoppingCartController.BooksInCart[i].additionalInfo + " ";
 		}
 
 
@@ -112,6 +115,12 @@ public class OrderReceiptHandler : MonoBehaviour {
 				checkoutController.cartController.UpdateFinancialAid(ShoppingCartController.OrderTotal);
 			}
 		}
+
+
+		FileIO.CurrentInvoice = "";
+		FileIO.CurrentInvoice = "CustomerID " + checkoutController.billingAddressInfo.name + "_" + invoice + " " + "Time " + System.DateTime.Now + " PaymentType " +
+		                        CheckoutPaymentHandler.selectedPaymentType + " Invoice Number " + invoice + " Order Total " + ShoppingCartController.OrderTotal + " Books " + booksPurchased;
+		FileIO.CreateInvoice();
 
 	}
 

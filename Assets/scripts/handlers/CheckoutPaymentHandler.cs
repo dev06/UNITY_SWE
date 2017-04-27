@@ -49,6 +49,7 @@ public class CheckoutPaymentHandler : MonoBehaviour {
 	void FixedUpdate()
 	{
 		SetFinancialAidText();
+
 	}
 
 	void Start () {
@@ -56,7 +57,13 @@ public class CheckoutPaymentHandler : MonoBehaviour {
 		PopulateCreditCardDates();
 	}
 
+	public bool ConsistsOfWhiteSpace(string s) {
+		foreach (char c in s) {
+			if (c != ' ') { return false; }
+		}
+		return true;
 
+	}
 
 	public void OnPaymentDropDownChange()
 	{
@@ -208,25 +215,42 @@ public class CheckoutPaymentHandler : MonoBehaviour {
 		}
 	}
 
-
+	public DialogHandler dialog;
 	public bool IsProcessingInfoSuccessfull()
 	{
+		string error = "";
+		bool valid = true;
 		if (selectedPaymentType == SystemEnum.PaymentType.CreditCard)
 		{
-			if (cardNumber.text.Length < 16) { return false; }
-			if (cardName.text.Length <= 0) { return false; }
-			if (securityCode.text.Length <= 0) { return false; }
-			if (cardExpMonth.value == 0 || cardExpYear.value == 0) { return false; }
+			if (cardNumber.text.Length < 16) { error = "Enter 16 digit zip code. "; valid = false; }
+			if (!IsValidName(cardName.text)) { error = "Enter first and last name of card holder ";  valid = false; }
+			if (securityCode.text.Length <= 0) { error = "Enter the 3 digit security code.  "; valid = false; }
+			if (cardExpMonth.value == 0 || cardExpYear.value == 0) {  error = "Enter the expiration date "; valid = false; }
 		} else if (selectedPaymentType == SystemEnum.PaymentType.PayPal)
 		{
-			if (payPalUserName.text.Length <= 0) { return false; }
-			if (payPalPassword.text.Length <= 0) { return false; }
+			if (payPalUserName.text.Length <= 0) {error = "Enter PayPal account username"; valid = false; }
+			if (payPalPassword.text.Length <= 0) {error = "Enter PayPal account password"; valid = false; }
 		} else if (selectedPaymentType == SystemEnum.PaymentType.FinancialAid)
 		{
-			if (!hasSufficentAmount) { return false; }
+			if (!hasSufficentAmount) { error = "Insufficient amounts. "; valid = false; }
 		}
 
-		return true;
+		if (!valid)
+		{
+			dialog.ShowDialog(error);
+		}
+		return valid;
+	}
+
+
+	bool IsValidName(string name)
+	{
+
+		if (name.Contains(" ") && name.Length > 0 && !ConsistsOfWhiteSpace(name))
+		{
+			return true;
+		}
+		return false;
 	}
 
 	public void  ClearPaymentInformation()

@@ -56,6 +56,7 @@ public class SystemEnum
 		CheckoutBack,
 		CloseApp,
 		EmptyShoppingCart,
+		DialogClose,
 
 	}
 

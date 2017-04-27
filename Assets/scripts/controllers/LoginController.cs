@@ -7,6 +7,7 @@ public class LoginController : PageController {
 	public SystemEnum.PageType previousPage;
 	public InputField userName;
 	public InputField password;
+	public DialogHandler dialogHandler;
 
 	void OnEnable()
 	{
@@ -37,6 +38,9 @@ public class LoginController : PageController {
 				{
 					EventManager.OnPageLoad(PageLoader.PreviousPage);
 				}
+			} else
+			{
+				dialogHandler.ShowDialog("Incorrect Username or password. Try again");
 			}
 
 
@@ -87,6 +91,7 @@ public class LoginController : PageController {
 
 		return false;
 	}
+
 
 
 }

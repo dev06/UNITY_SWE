@@ -8,6 +8,7 @@ public class FileIO : MonoBehaviour
 	public static string BOOKS_FILENAME = "book_new";
 	public static string STUDENTS_FILENAME = "student_new";
 
+	public static string CurrentInvoice = "";
 
 
 	void Awake()
@@ -29,7 +30,7 @@ public class FileIO : MonoBehaviour
 		{
 			if (s.Contains(BOOKS_FILENAME))
 			{
-				if (s.Contains(".meta")) continue;
+				if (s.Contains(".meta")) { continue; }
 				string flipped = s.Replace(@"\", @"/");
 
 				text = GetFileContents(flipped);
@@ -146,16 +147,31 @@ public class FileIO : MonoBehaviour
 
 		}
 
+	}
 
-		// for (int i = 0; i < SystemController.Library.Count; i++)
-		// {
-		// 	if (i == 0)
-		// 	{
-		// 		SystemController.Library[i].NewStock = 12;
-		// 	}
-		// }
+	public static void CreateInvoice()
+	{
+		if (!File.Exists(Application.dataPath + "/Invoice.txt"))
+		{
+			using (FileStream fs = File.Create(Application.dataPath + "/Invoice.txt"))
+			{
+
+			}
+		}
 
 
+		Write(CurrentInvoice);
+
+
+
+	}
+
+	private static void Write(string invoice)
+	{
+		using (StreamWriter file = new StreamWriter(Application.dataPath + "/Invoice.txt", true))
+		{
+			file.WriteLine(invoice);
+		}
 	}
 
 
@@ -185,7 +201,7 @@ public class FileIO : MonoBehaviour
 		{
 			if (s.Contains(STUDENTS_FILENAME))
 			{
-				if (s.Contains(".meta")) continue;
+				if (s.Contains(".meta")) { continue; }
 				string flipped = s.Replace(@"\", @"/");
 
 				text = GetFileContents(flipped);
